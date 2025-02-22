@@ -18,8 +18,13 @@ import { formEmailValidation } from '@/lib/validation'
 
 import { magic } from '@/lib/magic'
 import { RPCError, RPCErrorCode } from 'magic-sdk'
+import { useState } from 'react'
+import Loading from '../ui/loading'
 
 export function FormLogin() {
+  // const [message, setMessage] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
   const form = useForm<z.infer<typeof formEmailValidation>>({
     resolver: zodResolver(formEmailValidation),
     defaultValues: {
@@ -28,6 +33,8 @@ export function FormLogin() {
   })
 
   async function onSubmit(values: z.infer<typeof formEmailValidation>) {
+    setLoading(true)
+
     try {
       const didToken = await magic.auth.loginWithEmailOTP({
         email: values.email,
@@ -35,6 +42,8 @@ export function FormLogin() {
       })
 
       console.log('ini nilai: ', didToken)
+
+      form.reset()
     } catch (err) {
       if (err instanceof RPCError) {
         switch (err.code) {
@@ -46,6 +55,8 @@ export function FormLogin() {
             break
         }
       }
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -72,8 +83,9 @@ export function FormLogin() {
         <Button
           className="cursor-pointer px-6 py-5 md:px-10 md:py-6 md:text-base"
           type="submit"
+          disabled={loading}
         >
-          Submit
+          {loading ? <Loading className="h-5 w-5" /> : 'Submit'}
         </Button>
       </form>
     </Form>
