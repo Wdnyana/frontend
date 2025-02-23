@@ -4,7 +4,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52f',
     name: 'Contractdasdasdasdsasdasdasdaidjaiodaondjadjnas.pdf',
-    status: 'Pending',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -34,7 +34,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52r',
     name: 'Contract.pdf',
-    status: 'Pending',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -54,7 +54,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52i',
     name: 'Contract.pdf',
-    status: 'Rejected',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -84,7 +84,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52d',
     name: 'Contract.pdf',
-    status: 'Rejected',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -94,7 +94,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52r',
     name: 'Contract.pdf',
-    status: 'Pending',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -114,7 +114,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52i',
     name: 'Contract.pdf',
-    status: 'Rejected',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -144,7 +144,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52d',
     name: 'Contract.pdf',
-    status: 'Rejected',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -154,7 +154,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52r',
     name: 'Contract.pdf',
-    status: 'Pending',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -174,7 +174,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52i',
     name: 'Contract.pdf',
-    status: 'Rejected',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -194,7 +194,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52f',
     name: 'Contractdasdasdasdsasdasdasdaidjaiodaondjadjnas.pdf',
-    status: 'Pending',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -214,7 +214,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52d',
     name: 'Contract.pdf',
-    status: 'Rejected',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -224,7 +224,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52r',
     name: 'Contract.pdf',
-    status: 'Pending',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -244,7 +244,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52i',
     name: 'Contract.pdf',
-    status: 'Rejected',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -274,7 +274,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52d',
     name: 'Contract.pdf',
-    status: 'Rejected',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -284,7 +284,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52r',
     name: 'Contract.pdf',
-    status: 'Pending',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -304,7 +304,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52i',
     name: 'Contract.pdf',
-    status: 'Rejected',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -334,7 +334,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52d',
     name: 'Contract.pdf',
-    status: 'Rejected',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -344,7 +344,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52r',
     name: 'Contract.pdf',
-    status: 'Pending',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {
@@ -364,7 +364,7 @@ export const dataDummy: Documents[] = [
   {
     id: '728ed52i',
     name: 'Contract.pdf',
-    status: 'Rejected',
+    status: 'Created',
     date: '11-08-1967',
     verifyBy: 'System',
     action: () => {

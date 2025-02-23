@@ -17,6 +17,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Pagination } from '../pagination'
+import { SearchForm } from '@/components/ui/search-form'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -36,6 +37,17 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
+      <div className="mt-7 mb-6 flex w-full items-center justify-between">
+        <div className="">
+          <h2>Document</h2>
+          <p className="md:text-base">View and manage your documents</p>
+        </div>
+
+        <div className="xl:w-1/4">
+          <SearchForm />
+        </div>
+      </div>
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>

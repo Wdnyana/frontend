@@ -9,14 +9,13 @@ import { Download } from 'lucide-react'
 function backgroundStatus(status: string) {
   switch (status) {
     case 'Verified':
-    case 'Transfer':
       return 'bg-green-800 text-white'
-    case 'Pending':
-      return 'bg-yellow-800 text-white'
-    case 'Rejected':
-      return 'bg-red-800 text-white'
+    case 'Transfer':
+      return 'bg-blue-600 text-white'
+    case 'Created':
+      return 'bg-purple-500 text-white'
     default:
-      return 'bg-gray-800 text-white'
+      return 'bg-gray-400 text-black'
   }
 }
 
