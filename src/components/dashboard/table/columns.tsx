@@ -23,11 +23,15 @@ export const columns: ColumnDef<Documents>[] = [
   {
     accessorKey: 'name',
     header: 'Document Name',
+    filterFn: 'includesString',
+    enableGlobalFilter: true,
     cell: ({ row }) => <div className="max-w-[150px]">{row.original.name}</div>,
   },
   {
     accessorKey: 'status',
     header: 'Status',
+    filterFn: 'includesString',
+    enableGlobalFilter: true,
     cell: ({ row }) => {
       return (
         <div className="text-center">
@@ -50,6 +54,8 @@ export const columns: ColumnDef<Documents>[] = [
   {
     accessorKey: 'verifyBy',
     header: 'Verified By',
+    filterFn: 'includesString',
+    enableGlobalFilter: true,
     cell: ({ row }) => {
       return <p className="text-center">{row.original.verifyBy}</p>
     },

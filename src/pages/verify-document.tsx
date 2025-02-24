@@ -7,15 +7,13 @@ const formatFiles = '.tt'
 export default function VerifyDocument() {
   return (
     <DashboardLayout>
-      <div className="flex h-full w-full flex-col justify-center">
-        <div className="-mt-52">
-          <h2>Verify Document</h2>
-          <p className="md:text-base">
-            Upload or drag and drop your document below to verify it.
-          </p>
-        </div>
+      <div className="mt-5 flex h-full w-full flex-col justify-start">
+        <h2>Verify Document</h2>
+        <p className="md:text-base">
+          Upload or drag and drop your document below to verify it.
+        </p>
 
-        <div className="mt-10 flex flex-col-reverse items-center justify-between gap-10 lg:flex-row">
+        <div className="mt-24 flex flex-col-reverse items-center justify-between gap-10 lg:flex-row">
           <UploadFile mode="verify" desc={text} formatFile={formatFiles} />
           <div className="h-full w-auto border">dasd</div>
         </div>

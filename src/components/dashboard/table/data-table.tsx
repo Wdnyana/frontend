@@ -1,11 +1,12 @@
 'use client'
 
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
+  filterFns,
+  getFilteredRowModel,
 } from '@tanstack/react-table'
 
 import {
@@ -18,21 +19,26 @@ import {
 } from '@/components/ui/table'
 import { Pagination } from '../pagination'
 import { SearchForm } from '@/components/ui/search-form'
-
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-}
+import { useState } from 'react'
+import { DataTableProps } from '@/types/general-type'
 
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [search, setSearch] = useState('')
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      globalFilter: search,
+    },
+    onGlobalFilterChange: setSearch,
+    globalFilterFn: filterFns.includesString,
   })
 
   return (
@@ -44,7 +50,10 @@ export function DataTable<TData, TValue>({
         </div>
 
         <div className="xl:w-1/4">
-          <SearchForm />
+          <SearchForm
+            search={search}
+            searchChange={(e) => setSearch(e.target.value)}
+          />
         </div>
       </div>
 
