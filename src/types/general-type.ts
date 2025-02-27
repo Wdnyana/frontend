@@ -32,3 +32,31 @@ export type SearchForms = {
   search?: string
   searchChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 } & React.ComponentProps<'form'>
+
+export type TypesDocument = {
+  id: string
+  name: string
+  description: string
+}[]
+
+export type SelectTypes = {
+  setSelectTypeDoc: (type: string) => void
+  selected: string
+  alert: boolean
+  setAlert: (value: boolean) => void
+}
+
+export type DocumentNames = {
+  fileName: string
+  setFileName: (name: string) => void
+  uploadedFile: File | null
+  alert: boolean
+  setAlert: (value: boolean) => void
+}
+
+export type DownloadDocuments = {
+  fileName: string
+  onReset: () => void
+  alert: boolean
+  setAlert: (value: boolean) => void
+}
