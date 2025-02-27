@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { UploadFiles } from '@/types/general-type'
-import { SelectType } from './step/select-type'
+import { SelectTypeDocument } from './step/select-type-document'
 import { NameDocument } from './step/name-document'
 import { DownloadDocument } from './step/download-document'
 import { DragAndDrop } from './step/drag-drop'
@@ -12,7 +12,8 @@ export function UploadFile({ desc, formatFile, mode }: UploadFiles) {
   const [progress, setProgress] = useState<number>(0)
   const [uploading, setUploading] = useState<boolean>(false)
   const [step, setStep] = useState<number>(1)
-  const [selectTypeDoc, setSelectTypeDoc] = useState<string>('')
+  const [selected, setSelectTypeDoc] = useState<string>('')
+  const [alert, setAlert] = useState(false)
   const [fileName, setFileName] = useState<string>('')
 
   const fileAccept: Record<string, string[]> =
@@ -60,7 +61,24 @@ export function UploadFile({ desc, formatFile, mode }: UploadFiles) {
     setUploadedFile(null)
   }
 
+  function handleToDashboard() {
+    setFileName('')
+    setUploadedFile(null)
+    setStep(1)
+  }
+
   function nextStep() {
+    if (step === 2 && !selected) {
+      setAlert(true)
+      return
+    }
+
+    if (step === 3 && fileName.trim() === '') {
+      setAlert(true)
+      return
+    }
+
+    setAlert(false)
     setStep((e) => e + 1)
   }
 
@@ -89,19 +107,35 @@ export function UploadFile({ desc, formatFile, mode }: UploadFiles) {
 
       {step === 2 && (
         <>
-          <SelectType />
+          <SelectTypeDocument
+            setSelectTypeDoc={setSelectTypeDoc}
+            selected={selected}
+            alert={alert}
+            setAlert={setAlert}
+          />
         </>
       )}
 
       {step === 3 && (
         <>
-          <NameDocument />
+          <NameDocument
+            fileName={fileName}
+            setFileName={setFileName}
+            uploadedFile={uploadedFile}
+            alert={alert}
+            setAlert={setAlert}
+          />
         </>
       )}
 
       {step === 4 && (
         <>
-          <DownloadDocument />
+          <DownloadDocument
+            fileName={`${fileName}.tt`}
+            onReset={handleToDashboard}
+            alert={alert}
+            setAlert={setAlert}
+          />
         </>
       )}
 
@@ -120,6 +154,8 @@ export function UploadFile({ desc, formatFile, mode }: UploadFiles) {
           onClick={nextStep}
           disabled={
             (step === 1 && (!uploadedFile || uploading || progress < 100)) ||
+            // (step === 2 && !selected) ||
+            // (step === 3 && fileName === '') ||
             step === 4
           }
         >

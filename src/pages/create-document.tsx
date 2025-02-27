@@ -8,7 +8,7 @@ export default function CreateDocument() {
   return (
     <DashboardLayout>
       <div className="mt-5 flex h-full w-full flex-col justify-start">
-        <h2>Create and Revoke Document</h2>
+        <h1>Create and Revoke Document</h1>
         <p className="md:text-base">
           Upload or drag and drop your document below to create or revoke a
           document.

@@ -68,7 +68,7 @@ export function DragAndDrop({
 
       {uploadedFile && !uploading && (
         <div className="mt-7 flex w-full items-center justify-between rounded-md border py-1 ps-4 pe-1 shadow-sm">
-          <span className="truncate">{uploadedFile.name}</span>
+          <span className="truncate text-gray-400">{uploadedFile.name}</span>
           <Button
             variant="ghost"
             size="icon"

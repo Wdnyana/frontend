@@ -8,7 +8,7 @@ export default function VerifyDocument() {
   return (
     <DashboardLayout>
       <div className="mt-5 flex h-full w-full flex-col justify-start">
-        <h2>Verify Document</h2>
+        <h1>Verify Document</h1>
         <p className="md:text-base">
           Upload or drag and drop your document below to verify it.
         </p>
