@@ -9,6 +9,11 @@ export type UploadFiles = {
   desc: string
   formatFile: string
   mode: 'verify' | 'create'
+  className?: string
+  selectedExchange?: string | null
+  alertView?: boolean
+  setAlertView?: (value: boolean) => void
+  onUploadSuccess?: () => void
 }
 
 export type DragAndDropFiles = {
@@ -59,4 +64,9 @@ export type DownloadDocuments = {
   onReset: () => void
   alert: boolean
   setAlert: (value: boolean) => void
+}
+
+export type SelectExchanges = {
+  onSelect: (value: string) => void
+  error?: boolean
 }

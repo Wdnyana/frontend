@@ -27,9 +27,11 @@ export function DragAndDrop({
       <div
         {...getRootProps()}
         className={`w-full border-2 px-10 py-20 xl:py-28 ${
-          isDragActive
-            ? 'border-primary border-dashed'
-            : 'border-dashed border-gray-300'
+          error
+            ? 'border-dashed border-red-500'
+            : isDragActive
+              ? 'border-primary border-dashed'
+              : 'border-dashed border-gray-300'
         } cursor-pointer rounded-lg text-center shadow-lg transition-all`}
       >
         <input {...getInputProps()} />
