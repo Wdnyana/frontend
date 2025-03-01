@@ -1,95 +1,81 @@
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { UploadFiles } from '@/types/general-type'
 import { SelectTypeDocument } from './step/select-type-document'
 import { NameDocument } from './step/name-document'
 import { DownloadDocument } from './step/download-document'
 import { DragAndDrop } from './step/drag-drop'
+import { AlertCircle } from 'lucide-react'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { useUploadHandler } from '@/hooks/use-upload-handler'
+import { cn } from '../../lib/utils'
 
-export function UploadFile({ desc, formatFile, mode }: UploadFiles) {
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [progress, setProgress] = useState<number>(0)
-  const [uploading, setUploading] = useState<boolean>(false)
+export function UploadFile({
+  desc,
+  formatFile,
+  mode,
+  selectedExchange,
+  alertView,
+  setAlertView,
+}: UploadFiles) {
+  const {
+    uploadedFile,
+    error,
+    progress,
+    uploading,
+    fileAccept,
+    onDragAndDrop,
+    rejectedFile,
+    removeFileUpload,
+  } = useUploadHandler(mode)
+
   const [step, setStep] = useState<number>(1)
   const [selected, setSelectTypeDoc] = useState<string>('')
   const [alert, setAlert] = useState(false)
   const [fileName, setFileName] = useState<string>('')
 
-  const fileAccept: Record<string, string[]> =
-    mode === 'verify'
-      ? { 'application/octet-stream': ['.tt'] }
-      : { 'text/csv': ['.csv'], 'application/json': ['.json'] }
-
-  function uploadFileProgress(file: File) {
-    setUploading(true)
-    setProgress(0)
-
-    let processing = 0
-    const interval = setInterval(() => {
-      const increment = Math.floor(Math.random() * 15) + 5
-      processing = Math.min(processing + increment, 100)
-      setProgress(processing)
-
-      if (processing >= 100) {
-        clearInterval(interval)
-
-        setTimeout(() => {
-          setUploadedFile(file)
-          setUploading(false)
-        }, 500)
-      }
-    }, 300)
-  }
-
-  const onDragAndDrop = useCallback((acceptedFiles: File[]) => {
-    if (acceptedFiles.length) {
-      uploadFileProgress(acceptedFiles[0])
-      setError(null)
-    }
-  }, [])
-
-  const rejectedFile = useCallback(() => {
-    setError(
-      `Invalid file format. Please upload ${
-        mode === 'verify' ? 'a .tt file' : '.csv or .json files'
-      }.`,
-    )
-  }, [mode])
-
-  function removeFileUpload() {
-    setUploadedFile(null)
-  }
-
   function handleToDashboard() {
     setFileName('')
-    setUploadedFile(null)
     setStep(1)
   }
 
   function nextStep() {
-    if (step === 2 && !selected) {
-      setAlert(true)
+    if (mode === 'verify' && step === 1 && !selectedExchange) {
+      setAlertView?.(true)
       return
     }
-
-    if (step === 3 && fileName.trim() === '') {
+    if ((step === 2 && !selected) || (step === 3 && fileName.trim() === '')) {
       setAlert(true)
       return
     }
 
     setAlert(false)
-    setStep((e) => e + 1)
-  }
-
-  function prevStep() {
-    setStep((e) => e - 1)
+    setAlertView?.(false)
+    setStep((prev) => prev + 1)
   }
 
   return (
-    <div className="mx-auto flex flex-col items-center justify-center space-y-5 md:w-3/4 lg:mx-0 lg:w-1/2 xl:w-[35%]">
+    <div
+      className={cn(
+        `mx-auto flex flex-col items-center justify-center space-y-5 md:w-3/4 lg:mx-0 lg:w-1/2 xl:w-[35%]`,
+      )}
+    >
       {step === 1 && (
         <>
+          {alertView && mode === 'verify' && !selectedExchange && (
+            <Alert
+              className="mb-3 flex items-center gap-3"
+              variant="destructive"
+            >
+              <AlertCircle className="h-4 w-4" />
+              <div>
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription className="text-red-700">
+                  Select Exchange before next step!
+                </AlertDescription>
+              </div>
+            </Alert>
+          )}
           <DragAndDrop
             desc={desc}
             formatFile={formatFile}
@@ -105,45 +91,39 @@ export function UploadFile({ desc, formatFile, mode }: UploadFiles) {
         </>
       )}
 
-      {step === 2 && (
-        <>
-          <SelectTypeDocument
-            setSelectTypeDoc={setSelectTypeDoc}
-            selected={selected}
-            alert={alert}
-            setAlert={setAlert}
-          />
-        </>
+      {step === 2 && mode === 'create' && (
+        <SelectTypeDocument
+          setSelectTypeDoc={setSelectTypeDoc}
+          selected={selected}
+          alert={alert}
+          setAlert={setAlert}
+        />
       )}
 
-      {step === 3 && (
-        <>
-          <NameDocument
-            fileName={fileName}
-            setFileName={setFileName}
-            uploadedFile={uploadedFile}
-            alert={alert}
-            setAlert={setAlert}
-          />
-        </>
+      {step === 3 && mode === 'create' && (
+        <NameDocument
+          fileName={fileName}
+          uploadedFile={uploadedFile}
+          setFileName={setFileName}
+          alert={alert}
+          setAlert={setAlert}
+        />
       )}
 
-      {step === 4 && (
-        <>
-          <DownloadDocument
-            fileName={`${fileName}.tt`}
-            onReset={handleToDashboard}
-            alert={alert}
-            setAlert={setAlert}
-          />
-        </>
+      {step === 4 && mode === 'create' && (
+        <DownloadDocument
+          fileName={`${fileName}.tt`}
+          onReset={handleToDashboard}
+          alert={alert}
+          setAlert={setAlert}
+        />
       )}
 
       <div className="mt-4 flex w-full justify-end gap-8">
         <Button
           variant="outline"
           className="cursor-pointer rounded-lg px-10 py-5 font-normal md:text-base"
-          onClick={prevStep}
+          onClick={() => setStep((prev) => prev - 1)}
           disabled={step === 1}
         >
           Back
@@ -154,8 +134,6 @@ export function UploadFile({ desc, formatFile, mode }: UploadFiles) {
           onClick={nextStep}
           disabled={
             (step === 1 && (!uploadedFile || uploading || progress < 100)) ||
-            // (step === 2 && !selected) ||
-            // (step === 3 && fileName === '') ||
             step === 4
           }
         >
