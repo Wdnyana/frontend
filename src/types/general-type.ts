@@ -70,3 +70,7 @@ export type SelectExchanges = {
   onSelect: (value: string) => void
   error?: boolean
 }
+
+export type HeaderDocumentReview = {
+  type: 'nft' | 'invoice'
+}
