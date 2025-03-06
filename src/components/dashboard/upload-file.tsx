@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { UploadFiles } from '@/types/general-type'
 import { SelectTypeDocument } from './step/select-type-document'
@@ -9,6 +9,8 @@ import { AlertCircle } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { useUploadHandler } from '@/hooks/use-upload-handler'
 import { cn } from '../../lib/utils'
+import { DocumentView } from './document-view'
+import { useNavigate } from 'react-router-dom'
 
 export function UploadFile({
   desc,
@@ -33,6 +35,9 @@ export function UploadFile({
   const [selected, setSelectTypeDoc] = useState<string>('')
   const [alert, setAlert] = useState(false)
   const [fileName, setFileName] = useState<string>('')
+  const [verifyMode, setVerifyMode] = useState(false)
+
+  const navigate = useNavigate()
 
   function handleToDashboard() {
     setFileName('')
@@ -53,6 +58,18 @@ export function UploadFile({
     setAlertView?.(false)
     setStep((prev) => prev + 1)
   }
+
+  useEffect(() => {
+    if (mode === 'verify' && uploadedFile && progress === 100) {
+      setVerifyMode(true)
+    }
+  }, [uploadedFile, progress, mode])
+
+  useEffect(() => {
+    if (verifyMode) {
+      navigate('/document-viewer')
+    }
+  }, [verifyMode, navigate])
 
   return (
     <div
@@ -99,6 +116,8 @@ export function UploadFile({
           setAlert={setAlert}
         />
       )}
+
+      {step === 2 && mode === 'verify' && <DocumentView />}
 
       {step === 3 && mode === 'create' && (
         <NameDocument

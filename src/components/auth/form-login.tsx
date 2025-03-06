@@ -38,7 +38,6 @@ export function FormLogin() {
     try {
       const didToken = await magic.auth.loginWithEmailOTP({
         email: values.email,
-        showUI: false,
       })
 
       console.log('ini nilai: ', didToken)
