@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { Dispatch, ReactNode, SetStateAction } from 'react'
 import { ColumnDef } from '@tanstack/react-table'
+import { Magic, PromiEvent } from 'magic-sdk'
+
+export type { Magic } from '@/lib/magic-provider'
 
 export type TypesClassNames = {
   className?: string
@@ -73,4 +76,31 @@ export type SelectExchanges = {
 
 export type HeaderDocumentReview = {
   type: 'nft' | 'invoice'
+}
+
+export type LoginEmailOTP = {
+  token: string
+  setToken: React.Dispatch<SetStateAction<string>>
+  type?: HeaderDocumentReview
+}
+
+export type OTPTypes = {
+  loginOtp?: PromiEvent<string | null>
+  cancelOTP: any
+}
+
+export type ButtonPropsLogout = {
+  setToken: Dispatch<SetStateAction<string>>
+  magic: Magic | InstanceType<typeof Magic> | null
+  navigate: (path: string) => void
+}
+
+export type LogoutComponentsProps = {
+  text: string
+  isDisconnect?: boolean
+  onClick: () => void
+}
+
+export type ProtectedRouteDashboard = {
+  children: ReactNode
 }
