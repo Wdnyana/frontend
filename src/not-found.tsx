@@ -1,11 +1,10 @@
 import { ArrowRight } from 'lucide-react'
-import DashboardLayout from './components/layout/dashboard/dashboard-layout'
 import { Button } from './components/ui/button'
 
 export default function NotFound() {
   return (
-    <DashboardLayout>
-      <div className="-my-10 flex h-full w-full flex-col items-center justify-center">
+    <div className="responsive-container h-screen w-full">
+      <div className="flex h-full w-full flex-col items-center justify-center">
         <h1 className="bg-secondary rounded-md px-6 py-3 md:text-5xl xl:text-7xl">
           4 <span className="text-primary">0</span> 4
         </h1>
@@ -21,6 +20,6 @@ export default function NotFound() {
           </a>
         </Button>
       </div>
-    </DashboardLayout>
+    </div>
   )
 }
