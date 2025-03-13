@@ -36,18 +36,21 @@ export default function RouterPages({ token, setToken }: LoginEmailOTP) {
                 <WrapperVerifyDocument token={token} setToken={setToken} />
               ),
             },
-            {
-              path: '/document-viewer',
-              element: (
-                <WrapperDocumentView
-                  token={token}
-                  setToken={setToken}
-                  type={{ type: 'invoice' }}
-                />
-              ),
-            },
+            // /document-viewer yang dibawah move sementara
+
+            // diatas ini
           ]
         : []),
+      {
+        path: '/document-viewer',
+        element: (
+          <WrapperDocumentView
+            token={token}
+            setToken={setToken}
+            type={{ type: 'nft' }}
+          />
+        ),
+      },
       {
         path: '*',
         element: (
