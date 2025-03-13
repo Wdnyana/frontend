@@ -1,84 +1,69 @@
-import { lazy, Suspense } from 'react'
+import { Suspense, useMemo } from 'react'
 import Loading from '@/components/ui/loading'
+import NotFound from './not-found.tsx'
+import {
+  WrapperCreateDocument,
+  WrapperDashboard,
+  WrapperLogin,
+  WrapperVerifyDocument,
+  WrapperDocumentView,
+} from './pages/wrapper.tsx'
 
-const PagesLogin = lazy(() => import('./pages/login'))
-const DashboardPages = lazy(() => import('./pages/dashboard'))
-const CreateDocument = lazy(() => import('./pages/create-document'))
-const VerifyDocument = lazy(() => import('./pages/verify-document.tsx'))
-const ViewDocument = lazy(() => import('./pages/view-document.tsx'))
-// const TransferDocument = lazy(() => import('./pages/transfer-document.tsx'))
+import { LoginEmailOTP } from '@/types/general-type'
 
-const RouterPages = [
-  {
-    path: '/authentication/login',
-    element: (
-      <Suspense
-        fallback={
-          <div className="flex h-screen w-full items-center justify-center">
-            <Loading className="md:h-16 md:w-16 2xl:h-20 2xl:w-20" />
-          </div>
-        }
-      >
-        <PagesLogin />
-      </Suspense>
-    ),
-  },
-  {
-    path: '/dashboard',
-    element: (
-      <Suspense
-        fallback={
-          <div className="flex h-screen w-full items-center justify-center">
-            <Loading className="md:h-16 md:w-16 2xl:h-20 2xl:w-20" />
-          </div>
-        }
-      >
-        <DashboardPages />
-      </Suspense>
-    ),
-  },
-  {
-    path: '/document/create',
-    element: (
-      <Suspense
-        fallback={
-          <div className="flex h-screen w-full items-center justify-center">
-            <Loading className="md:h-16 md:w-16 2xl:h-20 2xl:w-20" />
-          </div>
-        }
-      >
-        <CreateDocument />
-      </Suspense>
-    ),
-  },
-  {
-    path: '/document/verify',
-    element: (
-      <Suspense
-        fallback={
-          <div className="flex h-screen w-full items-center justify-center">
-            <Loading className="md:h-16 md:w-16 2xl:h-20 2xl:w-20" />
-          </div>
-        }
-      >
-        <VerifyDocument />
-      </Suspense>
-    ),
-  },
-  {
-    path: '/document-viewer',
-    element: (
-      <Suspense
-        fallback={
-          <div className="flex h-screen w-full items-center justify-center">
-            <Loading className="md:h-16 md:w-16 2xl:h-20 2xl:w-20" />
-          </div>
-        }
-      >
-        <ViewDocument type="invoice" />
-      </Suspense>
-    ),
-  },
-]
+export default function RouterPages({ token, setToken }: LoginEmailOTP) {
+  return useMemo(() => {
+    const router = [
+      {
+        path: '/authentication/login',
+        element: <WrapperLogin token={token} setToken={setToken} />,
+      },
+      ...(token
+        ? [
+            {
+              path: '/dashboard',
+              element: <WrapperDashboard token={token} setToken={setToken} />,
+            },
+            {
+              path: '/document/create',
+              element: (
+                <WrapperCreateDocument token={token} setToken={setToken} />
+              ),
+            },
+            {
+              path: '/document/verify',
+              element: (
+                <WrapperVerifyDocument token={token} setToken={setToken} />
+              ),
+            },
+            {
+              path: '/document-viewer',
+              element: (
+                <WrapperDocumentView
+                  token={token}
+                  setToken={setToken}
+                  type={{ type: 'invoice' }}
+                />
+              ),
+            },
+          ]
+        : []),
+      {
+        path: '*',
+        element: (
+          <Suspense
+            fallback={
+              <div className="flex h-screen w-full items-center justify-center">
+                <Loading className="md:h-16 md:w-16 2xl:h-20 2xl:w-20" />
+              </div>
+            }
+          >
+            <NotFound />
+          </Suspense>
+        ),
+      },
+    ]
 
-export default RouterPages
+    return router
+  }, [token, setToken])
+}

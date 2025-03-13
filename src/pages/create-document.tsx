@@ -1,10 +1,11 @@
 import { UploadFile } from '@/components/dashboard/upload-file'
 import DashboardLayout from '@/components/layout/dashboard/dashboard-layout'
+import { LoginEmailOTP } from '@/types/general-type'
 
 const text = 'Drag & drop or click to upload your file configuration here'
 const formatFiles = '.csv, .json'
 
-export default function CreateDocument() {
+export default function CreateDocument({ token, setToken }: LoginEmailOTP) {
   return (
     <DashboardLayout>
       <div className="mt-5 flex h-full w-full flex-col justify-start">

@@ -3,10 +3,11 @@ import { useState } from 'react'
 import { UploadFile } from '@/components/dashboard/upload-file'
 import DashboardLayout from '@/components/layout/dashboard/dashboard-layout'
 import { SelectForm } from '@/components/ui/select-form'
+import { LoginEmailOTP } from '@/types/general-type'
 const text = 'Drag & drop or click your TradeTrust file to view its contents'
 const formatFiles = '.tt'
 
-export default function VerifyDocument() {
+export default function VerifyDocument({ token, setToken }: LoginEmailOTP) {
   const [selectedExchange, setSelectedExchange] = useState<string | null>(null)
   const [alertView, setAlertView] = useState(false)
 

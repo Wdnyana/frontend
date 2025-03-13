@@ -3,13 +3,13 @@ import { InvoiceDocument } from '@/components/dashboard/invoice-document'
 import { NFTDocument } from '@/components/dashboard/nft-document'
 import DashboardLayout from '@/components/layout/dashboard/dashboard-layout'
 import { Button } from '@/components/ui/button'
-import { HeaderDocumentReview } from '@/types/general-type'
+import { LoginEmailOTP } from '@/types/general-type'
 
-export default function ViewDocument({ type }: HeaderDocumentReview) {
+export default function ViewDocument({ token, setToken, type }: LoginEmailOTP) {
   return (
     <DashboardLayout>
       <div className="mt-5 h-full w-full">
-        {type === 'nft' ? (
+        {type?.type === 'nft' ? (
           <>
             <div className="flex w-full flex-col items-center justify-between md:flex-row">
               <HeaderViewDocument />

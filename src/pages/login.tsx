@@ -1,7 +1,8 @@
 import { FormLogin } from '@/components/auth/form-login'
 import MainLayout from '@/components/layout/pages/main-layout'
+import { LoginEmailOTP } from '@/types/general-type'
 
-export default function Login() {
+export default function Login({ token, setToken }: LoginEmailOTP) {
   return (
     <MainLayout>
       <div className="flex h-full w-full items-center justify-center">
@@ -11,7 +12,7 @@ export default function Login() {
             Please enter your email to sign in
           </p>
 
-          <FormLogin />
+          <FormLogin token={token} setToken={setToken} />
         </div>
       </div>
     </MainLayout>
