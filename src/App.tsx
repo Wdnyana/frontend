@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react'
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+  Navigate,
+} from 'react-router-dom'
 import RouterPages from './router'
 import '@/styles/globals.css'
-import { WrapperLogin } from './pages/wrapper.tsx'
+import { WrapperDocumentView, WrapperLogin } from './pages/wrapper.tsx'
 import NotFound from './not-found'
 
 export default function App() {
@@ -20,7 +26,7 @@ export default function App() {
       '/dashboard',
       '/document/create',
       '/document/verify',
-      '/document-viewer',
+      // '/document-viewer',
     ]
 
     if (
@@ -36,8 +42,18 @@ export default function App() {
   return (
     <Routes>
       <Route
+        path="/"
+        element={<Navigate to="/authentication/login" replace />}
+      />
+      <Route
         path="/authentication/login"
         element={<WrapperLogin token={token} setToken={setToken} />}
+      />
+
+      {/* untuk sementara */}
+      <Route
+        path="/document-viewer"
+        element={<WrapperDocumentView token={token} setToken={setToken} />}
       />
 
       {token ? (
