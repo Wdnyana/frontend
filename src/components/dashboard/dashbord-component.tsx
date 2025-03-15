@@ -7,7 +7,7 @@ import UserInfo from './user-info'
 export function DashboardComponent({ token, setToken }: LoginEmailOTP) {
   return (
     <>
-      <UserInfo token={token} setToken={setToken} />
+      {/* <UserInfo token={token} setToken={setToken} /> */}
       <br />
       <DataTable columns={columns} data={dataDummy} />
     </>

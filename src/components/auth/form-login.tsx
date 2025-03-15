@@ -62,11 +62,12 @@ export function FormLogin({ token, setToken }: LoginEmailOTP) {
           .on('done', async (result) => {
             if (result) {
               const infoUser = await magic?.user.getInfo()
-
               console.log('User Info ini adalah:', infoUser)
 
-              setToken(result ?? '')
-              saveUserInfo(token, 'EMAIL', infoUser?.publicAddress ?? '')
+              const isToken = result ?? ''
+
+              setToken(isToken)
+              saveUserInfo(isToken, 'EMAIL', infoUser?.publicAddress ?? '')
             }
           })
           .catch((err) => {
