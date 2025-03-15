@@ -55,6 +55,7 @@ export function FormOTP({ loginOtp, cancelOTP }: OTPTypes) {
       },
     )
 
+    window.dispatchEvent(new Event('storageUpdate'))
     window.dispatchEvent(new Event('storage'))
     navigate('/dashboard', { replace: true })
 

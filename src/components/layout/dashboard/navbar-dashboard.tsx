@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { LogoutButton } from '@/components/ui/logout-button'
 import { ModeToggle } from '@/components/ui/mode-toggle'
 import { LoginEmailOTP } from '@/types/general-type'
+import { Link } from 'react-router-dom'
 
 export function NavbarDashboard({ token, setToken }: LoginEmailOTP) {
   return (
@@ -14,13 +15,13 @@ export function NavbarDashboard({ token, setToken }: LoginEmailOTP) {
             asChild
             className="rounded-xl px-5 py-[22px] text-base capitalize"
           >
-            <a href="/document/create">create document</a>
+            <Link to="/document/create">create document</Link>
           </Button>
           <Button
             asChild
             className="rounded-xl px-5 py-[22px] text-base capitalize"
           >
-            <a href="/document/verify">verify document</a>
+            <Link to="/document/verify">verify document</Link>
           </Button>
 
           <LogoutButton token={token} setToken={setToken} />

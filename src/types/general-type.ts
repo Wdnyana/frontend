@@ -104,3 +104,9 @@ export type LogoutComponentsProps = {
 export type ProtectedRouteDashboard = {
   children: ReactNode
 }
+
+export type RouteTypes = {
+  path: string
+  element: React.ReactNode
+  protected: boolean
+}
