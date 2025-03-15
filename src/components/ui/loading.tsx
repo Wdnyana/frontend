@@ -5,7 +5,10 @@ import { TypesClassNames } from '@/types/general-type'
 export default function Loading({ className }: TypesClassNames) {
   return (
     <>
-      <Loader2 className={cn('h-12 w-12 animate-spin', className)} />
+      <Loader2
+        className={cn('h-12 w-12 animate-spin', className)}
+        style={{ animation: 'spin 1s linear infinite' }}
+      />
     </>
   )
 }

@@ -1,25 +1,33 @@
 import { useEffect, useState } from 'react'
-import {
-  Routes,
-  Route,
-  useNavigate,
-  useLocation,
-  Navigate,
-} from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import RouterPages from './router'
 import '@/styles/globals.css'
-import { WrapperDocumentView, WrapperLogin } from './pages/wrapper.tsx'
-import NotFound from './not-found'
+import Loading from './components/ui/loading.tsx'
 
 export default function App() {
   const [token, setToken] = useState<string>('')
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
   const location = useLocation()
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token') ?? ''
     setToken(storedToken)
-  }, [])
+    setLoading(false)
+
+    const handleStorageEvent = () => {
+      const updatedToken = localStorage.getItem('token') ?? ''
+      setToken(updatedToken)
+    }
+
+    window.addEventListener('storage', handleStorageEvent)
+    window.addEventListener('storageUpdate', handleStorageEvent)
+
+    return () => {
+      window.removeEventListener('storage', handleStorageEvent)
+      window.removeEventListener('storageUpdate', handleStorageEvent)
+    }
+  }, [setToken])
 
   useEffect(() => {
     const protectedRoutes = [
@@ -30,44 +38,29 @@ export default function App() {
     ]
 
     if (
+      !loading &&
       !token &&
       protectedRoutes.some((route) => location.pathname.startsWith(route))
     ) {
       navigate('/authentication/login', { replace: true })
     }
-  }, [token, navigate, location])
+  }, [token, navigate, location, loading])
+
+  if (loading) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <Loading className="md:h-16 md:w-16 2xl:h-20 2xl:w-20" />
+      </div>
+    )
+  }
 
   const routes = RouterPages({ token, setToken })
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={<Navigate to="/authentication/login" replace />}
-      />
-      <Route
-        path="/authentication/login"
-        element={<WrapperLogin token={token} setToken={setToken} />}
-      />
-
-      {/* untuk sementara */}
-      <Route
-        path="/document-viewer"
-        element={<WrapperDocumentView token={token} setToken={setToken} />}
-      />
-
-      {token ? (
-        <>
-          {routes.map((route, i) => (
-            <Route key={i} path={route.path} element={route.element} />
-          ))}
-          <Route path="*" element={<NotFound />} />
-        </>
-      ) : (
-        <>
-          <Route path="*" element={<NotFound />} />
-        </>
-      )}
+      {routes.map((route, i) => (
+        <Route key={i} path={route.path} element={route.element} />
+      ))}
     </Routes>
   )
 }
